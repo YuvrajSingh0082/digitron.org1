@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digitron Converter</title>
+    <style>
+        /* General body style */
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+            url('https://i.pinimg.com/474x/8e/33/3b/8e333b9d7647be22dbf3a46146ce2032.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+        }
+
+        /* Header style */
+        .heade {
+            width: fit-content;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20%;
+            padding: 2px 15px;
+            font-size: 1.8rem;
+            backdrop-filter: blur(5px);
+            margin: 20px auto;
+        }
+
+        /* Converter container style */
+        .converter-container {
+            width: 500px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Input and select styling */
+        .input-group {
+            width: 100%;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .input-group label {
+            font-size: 1.2rem;
+            width: 30%;
+        }
+
+        .input-group input, .input-group select {
+            width: 65%;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            background-color: #333;
+            color: #fff;
+        }
+
+        /* Convert button style */
+        .convert-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 10px;
+        }
+
+        .convert-button:hover {
+            background-color: #0050a6;
+        }
+
+        /* Result display */
+        .result {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .exbut{
+            padding: 10px 20px;
+            margin: 14px;
+            margin-left: 60%;
+            background-color: #007bff;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            justify-content: center;
+        }
+        .exbut:hover {
+            background-color: #0050a6;
+        }
+
+        footer {
+            background-color: grey;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="heade">
+        <h2>Digitron Converter</h2>
+    </div>
+
+    <div class="converter-container">
+        <div class="input-group">
+            <label for="inputValue">Enter Value:</label>
+            <input type="number" id="inputValue" placeholder="Enter value" />
+        </div>
+
+        <div class="input-group">
+            <label for="fromUnit">From:</label>
+            <select id="fromUnit">
+                <option value="m">Meter (m)</option>
+                <option value="cm">Centimeter (cm)</option>
+                <option value="kg">Kilogram (kg)</option>
+                <option value="g">Gram (g)</option>
+                <option value="L">Liter (L)</option>
+                <option value="ml">Milliliter (ml)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="toUnit">To:</label>
+            <select id="toUnit">
+                <option value="m">Meter (m)</option>
+                <option value="cm">Centimeter (cm)</option>
+                <option value="kg">Kilogram (kg)</option>
+                <option value="g">Gram (g)</option>
+                <option value="L">Liter (L)</option>
+                <option value="ml">Milliliter (ml)</option>
+            </select>
+        </div>
+
+        <button class="convert-button" onclick="convert()">Convert</button>
+
+        <div class="result" id="result">Result: </div>
+    </div>
+    <a href="/project/calculate.html"><button class="exbut">Back</button></a>
+
+    <footer>
+        <p>&copy; Digitron 2024</p>
+    </footer>
+
+    <script>
+        // Conversion logic
+        function convert() {
+            const inputValue = parseFloat(document.getElementById('inputValue').value);
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+            let result = 0;
+
+            // Conversion factors
+            const conversionFactors = {
+                m: { cm: 100, m: 1 },
+                cm: { m: 0.01, cm: 1 },
+                kg: { g: 1000, kg: 1 },
+                g: { kg: 0.001, g: 1 },
+                L: { ml: 1000, L: 1 },
+                ml: { L: 0.001, ml: 1 }
+            };
+
+            // Check if conversion factor exists
+            if (conversionFactors[fromUnit] && conversionFactors[fromUnit][toUnit]) {
+                result = inputValue * conversionFactors[fromUnit][toUnit];
+                document.getElementById('result').textContent = `Result: ${result} ${toUnit}`;
+            } else {
+                document.getElementById('result').textContent = "Conversion not possible";
+            }
+        }
+    </script>
+</body>
+</html>
